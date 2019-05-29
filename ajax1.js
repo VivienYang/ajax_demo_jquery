@@ -10,8 +10,7 @@ window.jQuery = function(node){
         }
     }
 }
-window.jQuery.ajax = function(options){
-    let {url,method,headers,body,success, fail} = {...options}
+window.jQuery.ajax1 = function({url,method,headers,body,success, fail}){
     let request = new XMLHttpRequest()
     request.open(method,url)//配置request
     for(var key in headers){
@@ -24,17 +23,17 @@ window.jQuery.ajax = function(options){
             if(request.status>=200 && request.status<300){
                 success(request.responseText)
             }else{
-                success(request.responseText)
+                fail(request.responseText)
             }
         }
     }
 }
 my_ajax1.addEventListener('click',function(){
-    jQuery.ajax({
+    jQuery.ajax1({
         url:'/xxx/json',
         method:'post',
-        headers:{'content-type':'json','vivien':18},
-        body:{a:1,b:2},
+        headers:{'content-type':'text/json','vivien':18},
+        body:'{a:1,b:2}',
         success:function(res){
             //解析json
             var res=JSON.parse(res)
@@ -44,8 +43,8 @@ my_ajax1.addEventListener('click',function(){
             let content=note.content
             alert(`to:${to}\r\ncontent:${content}\r\writer:${writer}`)
         },
-        fail:function(){
-
+        fail:function(err_res){
+            console.log(err_res)
         }
     })
 })
